@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
-const config = require("../config/config");
+const CONFIG = require("../config/config");
+
+const secretKey = process.env.SECRET_KEY | CONFIG.SECRET_KEY;
 
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
@@ -7,7 +9,7 @@ const verifyToken = (req, res, next) => {
 
   if (token == null) return res.sendStatus(401);
 
-  jwt.verify(token, config.secretKey, (err, user) => {
+  jwt.verify(token, secretKey, (err, user) => {
     if (err) return res.sendStatus(403);
 
     req.user = user;

@@ -16,10 +16,10 @@ const saltRounds = 10;
 const secretKey = process.env.SECRET_KEY | CONFIG.SECRET_KEY;
 
 const connection = mysql.createConnection({
-  host: process.env.HOST | CONFIG.HOST,
-  user: process.env.USER | CONFIG.USER,
-  password: process.env.PASSWORD | CONFIG.PASSWORD,
-  database: process.env.DATABASE | CONFIG.DATABASE,
+  host: process.env.HOST || CONFIG.HOST,
+  user: process.env.USER || CONFIG.USER,
+  password: process.env.PASSWORD || CONFIG.PASSWORD,
+  database: process.env.DATABASE || CONFIG.DATABASE,
 });
 
 app.post("/register", (req, res) => {

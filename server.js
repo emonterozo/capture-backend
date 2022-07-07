@@ -57,6 +57,7 @@ app.post("/login", (req, res) => {
   const queryString = `SELECT * FROM users WHERE username = "${username}"`;
   connection.query(queryString, function (err, result, fields) {
     if (err) {
+      console.log(err);
       res.sendStatus(500);
     } else {
       if (result.length > 0) {
@@ -64,6 +65,7 @@ app.post("/login", (req, res) => {
           password,
           result[0].password,
           function (err, passwordResult) {
+            console.log("bcrypt", err);
             if (passwordResult) {
               const token = jwt.sign({ id: result[0].id }, secretKey, {
                 expiresIn: 86400, // expires in 24 hours

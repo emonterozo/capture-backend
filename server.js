@@ -10,17 +10,22 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const port = process.env.PORT || 3000;
+const port = process.env.SERVER_PORT || CONFIG.SERVER_PORT;
 const saltRounds = 10;
 
 const secretKey = process.env.SECRET_KEY || CONFIG.SECRET_KEY;
+const host = process.env.HOST || CONFIG.HOST;
+const user = process.env.DB_USER || CONFIG.DB_USER;
+const password = process.env.PASSWORD || CONFIG.PASSWORD;
+const database = process.env.DATABASE || CONFIG.DATABASE;
+const dbPort = process.env.DB_PORT || CONFIG.DB_PORT;
 
 const connection = mysql.createConnection({
-  host: process.env.HOST || CONFIG.HOST,
-  user: process.env.USER || CONFIG.USER,
-  password: process.env.PASSWORD || CONFIG.PASSWORD,
-  database: process.env.DATABASE || CONFIG.DATABASE,
-  port: process.env.PORT || CONFIG.PORT,
+  host: host,
+  user: user,
+  password: password,
+  database: database,
+  port: dbPort,
 });
 
 app.post("/register", (req, res) => {

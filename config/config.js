@@ -1,8 +1,9 @@
 module.exports = {
   SECRET_KEY: "supersecret",
+  SERVER_PORT: 3000,
   HOST: "",
-  USER: "",
+  DB_USER: "",
   PASSWORD: "",
   DATABASE: "",
-  PORT: 0000,
+  DB_PORT: 3306,
 };

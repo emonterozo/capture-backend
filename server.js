@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const port = process.env.SERVER_PORT || CONFIG.SERVER_PORT;
+const port = process.env.PORT || CONFIG.PORT;
 const saltRounds = 10;
 
 const secretKey = process.env.SECRET_KEY || CONFIG.SECRET_KEY;

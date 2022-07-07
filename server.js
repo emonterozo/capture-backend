@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const bcrypt = require("bcrypt");
-const config = require("./config/config");
+const CONFIG = require("./config/config");
 const jwt = require("jsonwebtoken");
 const { verifyToken } = require("./middleware/authorization");
 
@@ -10,14 +10,16 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const saltRounds = 10;
 
+const secretKey = process.env.SECRET_KEY | CONFIG.SECRET_KEY;
+
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "capture",
+  host: process.env.HOST | CONFIG.HOST,
+  user: process.env.USER | CONFIG.USER,
+  password: process.env.PASSWORD | CONFIG.PASSWORD,
+  database: process.env.DATABASE | CONFIG.DATABASE,
 });
 
 app.post("/register", (req, res) => {
@@ -32,7 +34,7 @@ app.post("/register", (req, res) => {
         } else {
           const queryString = `SELECT * FROM users WHERE username = "${username}"`;
           connection.query(queryString, function (err, result, fields) {
-            const token = jwt.sign({ id: result[0].id }, config.secretKey, {
+            const token = jwt.sign({ id: result[0].id }, secretKey, {
               expiresIn: 86400, // expires in 24 hours
             });
             res.status(200).json({
@@ -62,7 +64,7 @@ app.post("/login", (req, res) => {
           result[0].password,
           function (err, passwordResult) {
             if (passwordResult) {
-              const token = jwt.sign({ id: result[0].id }, config.secretKey, {
+              const token = jwt.sign({ id: result[0].id }, secretKey, {
                 expiresIn: 86400, // expires in 24 hours
               });
               res.status(200).json({

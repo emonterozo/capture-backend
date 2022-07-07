@@ -1,3 +1,7 @@
 module.exports = {
-  secretKey: "supersecret",
+  SECRET_KEY: "supersecret",
+  HOST: "",
+  USER: "",
+  PASSWORD: "",
+  DATABASE: "",
 };
